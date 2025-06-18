@@ -32,8 +32,8 @@
 
             <!-- Navigation Links -->
             <ul class="flex flex-wrap justify-center md:justify-start space-x-4 md:space-x-6 text-white text-lg font-medium">
-                <li><a href="#" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Home</a></li>
-                <li><a href="newfound/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">New Found</a></li>
+                <li><a href="/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Home</a></li>
+                <li><a href="/newfound/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">New Found</a></li>
                 <li><a href="#" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Profile</a></li>
                 <li><a href="logout/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Logout</a></li>
             </ul>
@@ -49,7 +49,7 @@
             </div>
         </nav>
     </header>
-
+    {%block content%}
     <!-- Main Content Area / "Canvas" for search results -->
     <main class="container mx-auto flex-grow p-4 md:p-8 flex items-center justify-center">
         <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl shadow-2xl p-6 md:p-10 text-center text-white w-full max-w-4xl search-results-container border border-white border-opacity-30">
@@ -64,3 +64,4 @@
     </main>
 </body>
 </html>
+{%endblock%}
