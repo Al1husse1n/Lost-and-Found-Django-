@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Found Item</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/newfound.css' %}">
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data" class="found-item-form">
+        {% csrf_token %}
+        
+        <h2>Report Found Item</h2>
+        
+        <!-- Item Name -->
+        <div class="form-group">
+            <label for="id_item_name">Item Name</label>
+            {{ form.item_name }}
+            {% if form.item_name.errors %}
+                <div class="error">{{ form.item_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Item Picture -->
+        <div class="form-group">
+            <label for="id_item_picture">Item Picture</label>
+            {{ form.item_picture }}
+            {% if form.item_picture.errors %}
+                <div class="error">{{ form.item_picture.errors }}</div>
+            {% endif %}
+            <small class="form-text">Max file size: 5MB</small>
+        </div>
+        
+        <!-- Item Description -->
+        <div class="form-group">
+            <label for="id_item_description">Description</label>
+            {{ form.item_description }}
+            {% if form.item_description.errors %}
+                <div class="error">{{ form.item_description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Contact Email -->
+        <div class="form-group">
+            <label for="id_contactEmail">Contact Email</label>
+            {{ form.contactEmail }}
+            {% if form.contactEmail.errors %}
+                <div class="error">{{ form.contactEmail.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Found Location -->
+        <div class="form-group">
+            <label for="id_found_at">Found Location</label>
+            {{ form.found_at }}
+            {% if form.found_at.errors %}
+                <div class="error">{{ form.found_at.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Found Date/Time -->
+        <div class="form-group">
+            <label for="id_found_datetime">Date & Time Found</label>
+            {{ form.found_datetime }}
+            {% if form.found_datetime.errors %}
+                <div class="error">{{ form.found_datetime.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Submit</button>
+        </div>
+    </form>
+</body>
+</html>

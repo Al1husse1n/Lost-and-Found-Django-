@@ -22,6 +22,8 @@ from django.conf.urls.static import static  #pip install Pillow
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.home, name = 'home'),
+    path('', views.home, name = 'home'),
     path('login/', views.login_view, name = "login"),
+    path('logout/',views.logout_view, name = "logout"),
+    path('newfound/',views.newfound.as_view(), name = "newfound"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
