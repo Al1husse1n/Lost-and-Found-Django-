@@ -25,7 +25,9 @@ def login_view(request):
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    lost_items = LostItem.objects.all()
+    print(lost_items)
+    return render(request, 'home.html', {'lost_items': lost_items})
 
 def logout_view(request):
     logout(request)

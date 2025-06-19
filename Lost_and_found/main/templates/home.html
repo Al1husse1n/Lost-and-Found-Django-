@@ -10,14 +10,13 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(to bottom right, #8A2BE2, #4B0082); /* Purple gradient from the image */
+            background: linear-gradient(to bottom right, #8A2BE2, #4B0082);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        /* Custom styles for the search results container */
         .search-results-container {
-            min-height: 200px; /* Example min-height for the canvas area */
+            min-height: 200px;
         }
     </style>
 </head>
@@ -25,20 +24,17 @@
     <!-- Dashboard Header -->
     <header class="bg-purple-900 bg-opacity-75 shadow-lg p-4 md:p-6 rounded-b-lg">
         <nav class="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <!-- Logo/Site Title -->
             <div class="text-white text-2xl font-bold rounded-lg">
                 Campus Lost & Found
             </div>
 
-            <!-- Navigation Links -->
             <ul class="flex flex-wrap justify-center md:justify-start space-x-4 md:space-x-6 text-white text-lg font-medium">
                 <li><a href="/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Home</a></li>
                 <li><a href="/newfound/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">New Found</a></li>
                 <li><a href="#" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Profile</a></li>
-                <li><a href="logout/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Logout</a></li>
+                <li><a href="/logout/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Logout</a></li>
             </ul>
-
-            <!-- Search Bar -->
+            {%block content%}
             <div class="w-full md:w-auto flex justify-center">
                 <div class="relative w-full max-w-md">
                     <input type="text" placeholder="Search lost items..." class="w-full pl-10 pr-4 py-2 rounded-full bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-white text-base shadow-inner transition-all duration-200">
@@ -49,17 +45,22 @@
             </div>
         </nav>
     </header>
-    {%block content%}
-    <!-- Main Content Area / "Canvas" for search results -->
+    
+    <!-- Main Content Area -->
     <main class="container mx-auto flex-grow p-4 md:p-8 flex items-center justify-center">
         <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl shadow-2xl p-6 md:p-10 text-center text-white w-full max-w-4xl search-results-container border border-white border-opacity-30">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-lg">Search Results Go Here</h2>
-            <p class="text-lg md:text-xl font-light leading-relaxed mb-6">
-                This area will display the lost items based on your search query.
-                You can imagine items like "keys", "wallet", "laptop", etc.,
-                appearing here in a structured format (e.g., cards or a list).
-            </p>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-lg">Recent Lost & Found Items</h2>
+            
+            {% for item in lost_items %}
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg mb-4 text-left">
+                <h3 class="text-xl font-semibold">{{ item.item_name }}</h3>
+                <p class="text-sm">{{ item.item_description }}</p>
+                <p class="text-xs opacity-75 mt-2">Found at: {{ item.found_at }} on {{ item.found_datetime|date:"M d, Y" }} by {{item.item_founder}}</p>
+                <p class="text-xs opacity-75 mt-2"> Contact them at {{item.contactEmail}}</p>
             </div>
+            {% empty %}
+            <p class="text-lg">No items found yet.</p>
+            {% endfor %}
         </div>
     </main>
 </body>
