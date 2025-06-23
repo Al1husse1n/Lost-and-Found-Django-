@@ -22,6 +22,9 @@ class LostItem(models.Model):
     found_datetime = models.DateTimeField()
     status = models.CharField(max_length=5, choices=STATUS_CHOICES, default='lost')
     claimed_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='claimed_items')
+    
+    class Meta:
+        ordering = ['-found_datetime']
 
     def __str__(self):
         return self.item_name

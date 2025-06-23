@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,34 +36,56 @@
                 <li><a href="/logout/" class="hover:text-purple-300 transition-colors duration-200 p-2 rounded-md">Logout</a></li>
             </ul>
             {%block content%}
-            <div class="w-full md:w-auto flex justify-center">
-                <div class="relative w-full max-w-md">
-                    <input type="text" placeholder="Search lost items..." class="w-full pl-10 pr-4 py-2 rounded-full bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-white text-base shadow-inner transition-all duration-200">
-                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
-            </div>
+            <form method="POST"  class="w-full md:w-auto flex justify-center">
+    {% csrf_token %}
+    <div class="relative w-full max-w-md">
+        <input type="text" name="searchbox" placeholder="Search lost items..."
+               class="w-full pl-10 pr-4 py-2 rounded-full bg-white bg-opacity-90 text-gray-800 placeholder-gray-500
+                      focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-white text-base shadow-inner transition-all duration-200">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" fill="none"
+             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+    </div>
+    <button type="submit" name="search" value="zz"
+            class="ml-2 px-4 py-2 bg-white text-purple-800 font-semibold rounded-full hover:bg-purple-100 transition">
+        Search
+    </button>
+</form>
+
         </nav>
     </header>
     
-    <!-- Main Content Area -->
+
     <main class="container mx-auto flex-grow p-4 md:p-8 flex items-center justify-center">
         <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl shadow-2xl p-6 md:p-10 text-center text-white w-full max-w-4xl search-results-container border border-white border-opacity-30">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-lg">Recent Lost & Found Items</h2>
             
             {% for item in lost_items %}
-            <div class="bg-white bg-opacity-10 p-4 rounded-lg mb-4 text-left">
-                <h3 class="text-xl font-semibold">{{ item.item_name }}</h3>
-                <p class="text-sm">{{ item.item_description }}</p>
-                <p class="text-xs opacity-75 mt-2">Found at: {{ item.found_at }} on {{ item.found_datetime|date:"M d, Y" }} by {{item.item_founder}}</p>
-                <p class="text-xs opacity-75 mt-2"> Contact them at {{item.contactEmail}}</p>
+            <div class="bg-white bg-opacity-10 p-4 rounded-lg mb-4 flex items-center space-x-4">
+                <div class="flex-1 text-left">
+                    <h3 class="text-xl font-semibold">{{ item.item_name }}</h3>
+                    <p class="text-sm">{{ item.item_description }}</p>
+                    <p class="text-xs opacity-75 mt-2">Found at: {{ item.found_at }} on {{ item.found_datetime|date:"M d, Y" }} by {{item.item_founder}}</p>
+                    <p class="text-xs opacity-75 mt-2">Contact them at {{item.contactEmail}}</p>
+                </div>
+                <img src="{{ item.item_picture.url }}" alt="{{ item.item_name }}"
+                     class="w-24 h-24 object-cover rounded-lg cursor-pointer border border-white border-opacity-25"
+                     onclick="openImageModal('{{ item.item_picture.url }}')">
             </div>
             {% empty %}
             <p class="text-lg">No items found yet.</p>
             {% endfor %}
         </div>
     </main>
+
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden" onclick="closeImageModal()">
+        <img id="modalImage" class="max-w-full max-h-full rounded-lg border-4 border-white" />
+    </div>
+
+
+    <script src="{% static 'js/imageModal.js' %}"></script>
 </body>
 </html>
-{%endblock%}
+{% endblock %}
