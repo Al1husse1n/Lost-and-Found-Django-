@@ -25,7 +25,7 @@ def login_view(request):
 
 @login_required
 def home(request):
-    lost_items = LostItem.objects.none()  
+    lost_items = LostItem.objects.all()  
     if request.method == "POST" and request.POST.get("search"):
         search_item = request.POST.get("searchbox", "").strip()
         lost_items = LostItem.objects.filter(item_name__icontains=search_item)
